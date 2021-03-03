@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="favicon.ico">
+
+<title>JobsHere App| Aplicar para una Oferta de Trabajo</title>
+
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+<link th:href="@{/bootstrap/css/sticky-footer-navbar.css}"
+	rel="stylesheet">
+</head>
+
+<body>
+
+	<header th:insert="fragments/menu :: menu-main"> </header>
+
+	<main role="main">
+		<hr>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<img class="rounded mx-auto d-block"
+						th:src="@{/logos/{img} (img=${vacant.image}) }"
+						alt="Generic placeholder image" width="220" height="220">
+				</div>
+				<div class="col-md-9">
+					<div class="card">
+						<h4 class="card-header">
+							<strong>Aplicar para la vacante [[${vacant.name}]]</strong>
+						</h4>
+						<div class="card-body">
+							<h5 class="card-title">
+								<strong>Categoría: </strong><span
+									th:text="${vacant.category.name}"></span>
+							</h5>
+							<h6 class="card-title">
+								<strong>Publicado: </strong><span
+									th:text="${#dates.format(vacant.date,'dd-MM-yyyy')}">2019-01-01</span>
+							</h6>
+							<h6 class="card-title">
+								<strong>Salario Ofrecido: </strong><span
+									th:text="${vacant.salary}"></span>
+							</h6>
+							<p th:text="${vacant.description}" class="card-text"></p>
+							<hr>
+							<form th:action="@{/saveRequest}" method="post"
+								th:object="${request}" enctype="multiPart/form-data">
+								<div th:if="${#fields.hasErrors('*')}"
+									class="alert alert-danger" role="alert">
+									Por favor corrija los siguientes errores:
+									<ul>
+										<li th:each="err: ${#fields.errors('*')}" th:text="${err}" />
+									</ul>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="hidden" th:name="idVacant"
+												th:value="${vacant.id}"> <label for="comentarios">Comentarios</label>
+											<textarea class="form-control" name="comentarios"
+												id="comentarios" rows="2" th:field="*{commentR}"></textarea>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="archive">Curriculm Vitae</label> <input
+												type="file" class="form-control-file" name="archiveCV"
+												id="archiveCV">
+											<p class="help-block">Archivos [ pdf,doc,docx ]</p>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<button type="submit" title="Enviar mi Solicitud."
+									class="btn btn-primary">Enviar</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer th:insert="fragments/footer :: footer-main"></footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

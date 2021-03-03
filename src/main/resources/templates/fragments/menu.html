@@ -1,0 +1,42 @@
+<nav th:fragment="menu-main"
+	class="navbar navbar-expand-md navbar-dark fixed-top bg-dark bg-gradient">
+	<a class="navbar-brand" th:href="@{/}">JobsHere App</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarsExampleDefault"
+		aria-controls="navbarsExampleDefault" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"><a class="nav-link active" th:href="@{/}">Inicio</a>
+			</li>
+			<li class="navbar-nav mr-auto"
+				sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+				<a class="nav-link" th:href="@{/vacancies/indexPaginate}">
+					Vacantes</a>
+			</li>
+			<li class="nav-item"
+				sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+				<a class="nav-link" th:href="@{/categories/indexPaginate}">Categorias</a>
+			</li>
+			<li class="nav-item"
+				sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+				<a class="nav-link" th:href="@{/indexPaginate}">Solicitudes</a>
+			</li>
+			<li class="navbar-nav mr-auto"
+				sec:authorize="hasAnyAuthority('ADMINISTRADOR')"><a
+				class="nav-link" th:href="@{/user/index}"> Usuarios</a></li>
+		</ul>
+		<div sec:authorize="isAnonymous()">
+			<a class="btn btn-primary" th:href="@{/index}">Ingresar</a>&nbsp; <a
+				class="btn btn-primary" th:href="@{/signup}">Regitrarse</a>
+		</div>
+		<div sec:authorize="isAuthenticated()">
+			<span class="h5 text-muted"> Bienvenido:  </span>&nbsp; <span
+				class="text-muted mr-2 h5" sec:authentication="name" ></span> <a
+				class="btn btn-primary ml-1" th:href="@{/logout}">Cerrar Sesion</a>
+		</div>
+	</div>
+</nav>

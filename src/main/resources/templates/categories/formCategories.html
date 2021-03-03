@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" th:href="@{/favicon.ico}">
+
+<title>JobsHere App | Creación de Categorías</title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+<link th:href="@{/bootstrap/css/sticky-footer-navbar.css}"
+	rel="stylesheet">
+</head>
+
+<body>
+
+	<header th:insert="fragments/menu :: menu-main"> </header>
+
+	<main role="main">
+		<hr>
+		<div class="container">
+
+			<div class="card">
+				<h4 class="card-header">
+					<strong>Datos de la categoría</strong>
+				</h4>
+				<div class="card-body">
+					<form th:action="@{/categories/save}" method="post"
+						th:object="${category}">
+						<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+							role="alert">
+							Por favor corrija los siguientes errores:
+							<ul>
+								<li th:each="err: ${#fields.errors('*')}" th:text="${err}" />
+							</ul>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="hidden" th:field="*{id}"> <label
+										for="nombre">Nombre</label> <input th:field="*{name}"
+										class="form-control" id="name" name="name" required="required" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="descripcion">Descripción</label>
+									<textarea th:field="*{description}" class="form-control"
+										name="description" id="descripcion" rows="2"></textarea>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<button type="submit" title="Guardar el registro."
+							class="btn btn-primary">Guardar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /container -->
+
+	</main>
+
+	<footer th:insert="fragments/footer :: footer-main" class="footer"></footer>	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
